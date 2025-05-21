@@ -1,0 +1,22 @@
+<!-- templates/register.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Créer un compte</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">S'inscrire</button>
+    </form>
+    <p>Déjà inscrit ? <a href="/api/Login">Connectez-vous ici</a>.</p>
+</section>
+{% endblock %}

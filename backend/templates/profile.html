@@ -1,0 +1,70 @@
+<!-- templates/profile.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{% block title %}Profil de {{ user_profile.user.username }}{% endblock %}
+
+{% block content %}
+<section class="profile">
+    <h2>Profil de {{ user_profile.user.username }}</h2>
+
+    <div class="profile-info">
+        <img src="{{ user.profile.photo_profil.url }}" alt="Photo de profil" width="150" height="150">
+        {% if user == user_profile.user %}
+            {% if request.user == user %}
+                <a href="{% url 'modifier_photo' %}"  class="btn-modifier">Modifier la photo</a>
+            {% endif %}
+        {% endif %}
+        <p><strong>Nom d'utilisateur :</strong> {{ user_profile.user.username }}</p>
+        <p><strong>Prénom :</strong> {{ user_profile.user.first_name }}</p>
+        <p><strong>Nom :</strong> {{ user_profile.user.last_name }}</p>
+        <p><strong>Email :</strong> {{ user_profile.user.email }}</p>
+        <p><strong>Biographie :</strong>
+            {% if user == user_profile.user %}
+              {{ user_profile.biographie|default:"Pas encore de biographie." }}
+              <a href="{% url 'edit_biographie' %}" class="btn-modifier">Modifier</a>
+
+            {% else %}
+              {{ user_profile.biographie|default:"Pas encore de biographie." }}
+            {% endif %}
+          </p>
+        <p><strong>Note moyenne :</strong> {{ note_moyenne }}/5</p>
+        <p><strong>Locations effectuées :</strong> {{ user_profile.nb_locations }}</p>
+        <p><strong>Fiabilité :</strong> {{ user_profile.fiabilite }}%</p>
+    </div>
+
+    {% if user == user_profile.user %}
+    <div class="btn-container">
+        <a href="{% url 'reservations_a_confirmer' %}" class="btn-outline-warning">Voir les demandes de réservation à confirmer</a>
+    </div>
+    {% endif %}
+                
+    <hr>
+
+    <div class="reviews">
+        <h3>Avis reçus</h3>
+        {% if avis_list %}
+            <ul>
+                {% for avis in avis_list %}
+                    <li>
+                        <strong>{{ avis.auteur.username }}</strong> - {{ avis.note }}/5
+                        <br>
+                        "{{ avis.commentaire }}"
+                        <br><small>{{ avis.date|date:"d M Y" }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun avis pour le moment.</p>
+        {% endif %}
+    </div>
+
+    <div>{% if user.is_authenticated and user != user_profile.user %}
+        <a href="{% url 'ajouter_avis' user_profile.user.id %}" class="btn btn-outline-success">Laisser un avis</a>
+      {% endif %}</div>
+</section>
+{% endblock %}

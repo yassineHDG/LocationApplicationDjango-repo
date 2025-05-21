@@ -1,0 +1,115 @@
+/* CSS pour la page de modification d'objet */
+
+.edit-object-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #f97316; /* Couleur orange pour la modification */
+}
+
+.edit-object-container h2 {
+  color: #333333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.edit-object-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-object-form p {
+  margin-bottom: 1.5rem;
+}
+
+.edit-object-form label {
+  font-weight: 600;
+  color: #9a3412; /* Orange foncé pour les labels */
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.edit-object-form input,
+.edit-object-form textarea,
+.edit-object-form select {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.edit-object-form input[type="file"] {
+  padding: 0.5rem 0;
+  border: none;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-primary {
+  background-color: #f97316; /* Orange pour le bouton principal */
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #ea580c;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+/* Styles pour les erreurs de formulaire */
+.edit-object-form .errorlist {
+  color: #ef4444;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .edit-object-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .form-buttons {
+    flex-direction: column;
+  }
+  
+  .form-buttons .btn-primary,
+  .form-buttons .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

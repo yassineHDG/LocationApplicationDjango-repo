@@ -1,0 +1,25 @@
+<!-- templates/facture.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/facture.css' %}">
+{% endblock %}
+{% block title %}Facture{% endblock %}
+
+{% block content %}
+<div class="facture-container">
+  <h2>Facture</h2>
+
+  <div class="facture-details">
+    <p><strong>Date d'émission :</strong> {{ facture.date_emission }}</p>
+    <p><strong>Détails :</strong> {{ facture.detail }}</p>
+    <p class="facture-montant"><strong>Montant :</strong> {{ facture.montant }} €</p>
+  </div>
+
+  <form action="{% url 'demander_remboursement' facture.paiement.id %}" method="get" class="facture-form">
+    <button type="submit" class="btn btn-danger">Demander un remboursement</button>
+  </form>
+</div>
+{% endblock %}
+

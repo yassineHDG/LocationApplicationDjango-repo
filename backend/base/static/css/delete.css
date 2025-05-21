@@ -1,0 +1,81 @@
+/* CSS pour la page de confirmation de suppression */
+
+.delete-confirm-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #ef4444; /* Couleur rouge pour la suppression */
+  text-align: center;
+}
+
+.delete-confirm-container h2 {
+  color: #b91c1c; /* Rouge foncé pour le titre */
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.delete-message {
+  font-size: 1.1rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.delete-message strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.delete-form {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .delete-confirm-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .delete-form {
+    flex-direction: column;
+  }
+  
+  .delete-form .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/edit_biographie.css' %}">
+{% endblock %}
+
+{% block title %}Modifier votre biographie{% endblock %}
+
+
+
+{% block content %}
+<div class="edit-bio-container">
+  <h2>Modifier votre biographie</h2>
+  <form method="post" class="edit-bio-form">
+    {% csrf_token %}
+    <label for="biographie">Votre biographie :</label>
+    <textarea name="biographie" id="biographie" rows="6">{{ biographie }}</textarea>
+    
+    <div class="bio-buttons">
+      <button type="submit" class="btn btn-success">Enregistrer</button>
+      <a href="{% url 'profile' user.id %}" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

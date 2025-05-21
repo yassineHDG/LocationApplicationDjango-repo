@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/paiement.css' %}">
+{% endblock %}
+
+{% block title %}Page de paiement{% endblock %}
+
+
+{% block content %}
+<div class="payment-container">
+  <h2 class="text-center">Paiement</h2>
+  <p class="amount">💶 Montant à payer : <strong>{{ montant_total }} €</strong></p>
+  
+  <form method="post" class="payment-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Payer</button>
+  </form>
+</div>
+{% endblock %}
+

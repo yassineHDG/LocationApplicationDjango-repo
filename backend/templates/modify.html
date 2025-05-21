@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Modifier de l'objet{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/modify.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="edit-object-container">
+  <h2>Modifier l'objet</h2>
+  <form method="post" enctype="multipart/form-data" class="edit-object-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+      <a href="/api/Object/" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+

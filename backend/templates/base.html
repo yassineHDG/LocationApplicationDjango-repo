@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Location entre Particuliers{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="/api/Home">Accueil</a>
+            {% if user.is_authenticated %}
+                <a href="/api/Object/">Objets</a>
+                <a href="{% url 'profile' user.id %}">Profil</a> 
+                <a href="{% url 'factures_liste' %}">Mes Factures</a>
+                <a href="{% url 'remboursements_liste' %}">Mes Remboursements</a>
+                <a href="/api/Logout/">Déconnexion</a>
+            {% else %}
+                <a href="/api/Login/">Connexion</a>
+                <a href="/api/Register/">Inscription</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Le contenu de chaque page s'affiche ici -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Plateforme de location entre particuliers</p>
+    </footer>
+
+</body>
+</html>

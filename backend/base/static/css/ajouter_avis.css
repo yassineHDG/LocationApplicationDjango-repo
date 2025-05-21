@@ -1,0 +1,89 @@
+/* CSS pour la page d'ajout d'avis */
+
+.avis-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #8b5cf6; /* Couleur violette pour les avis */
+}
+
+.avis-container h2 {
+  color: #333333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.avis-form label {
+  font-weight: 600;
+  color: #5b21b6; /* Violet plus foncé pour les labels */
+  margin-bottom: 0.5rem;
+}
+
+.avis-form textarea {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.75rem;
+  min-height: 150px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.avis-form select {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.75rem;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.button-group .btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+}
+
+.button-group .btn-success {
+  background-color: #8b5cf6; /* Violet pour le bouton principal */
+  color: white;
+}
+
+.button-group .btn-success:hover {
+  background-color: #7c3aed;
+}
+
+/* Styles pour les erreurs de formulaire */
+.avis-form .errorlist {
+  color: #ef4444;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .avis-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .button-group .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

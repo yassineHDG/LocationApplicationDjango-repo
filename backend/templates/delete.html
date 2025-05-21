@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Supprimer votre objet{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/delete.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="delete-confirm-container">
+  <h2>Confirmer la suppression</h2>
+  <p class="delete-message">Es-tu sûr de vouloir supprimer l'objet : <strong>{{ object.nom }}</strong> ?</p>
+
+  <form method="post" class="delete-form">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">🗑️ Oui, supprimer</button>
+    <a href="/api/Object/" class="btn btn-secondary">❌ Annuler</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ajouter votre avis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ajouter_avis.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="avis-container">
+  <h2>Laisser un avis à {{ cible.username }}</h2>
+  <form method="post" class="avis-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="button-group">
+      <button type="submit" class="btn btn-success">Envoyer l'avis</button>
+      <a href="/api/Profile/{{ cible.id }}/" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirmation de reservation à louer{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/reservation_a_confirmer.css' %}">
+{% endblock %}
+{% block content %}
+  <h2 class="text-center my-4">Demandes de réservation en attente</h2>
+
+  <div class="reservation-list">
+    {% for reservation in reservations %}
+      <div class="reservation-card">
+        <p><strong>Objet :</strong> {{ reservation.objet.nom }}</p>
+        <p><strong>Locataire :</strong> {{ reservation.locataire.username }}</p>
+        <p><strong>Du :</strong> {{ reservation.date_debut }} au {{ reservation.date_fin }}</p>
+
+        <div class="btn-group">
+          <form method="post" action="{% url 'confirmer_reservation' reservation.id %}">
+            {% csrf_token %}
+            <button type="submit" name="statut" value="confirmee" class="btn btn-success">Confirmer</button>
+          </form>
+
+          <form method="post" action="{% url 'refuser_reservation' reservation.id %}">
+            {% csrf_token %}
+            <button type="submit" name="statut" value="refusee" class="btn btn-danger">Refuser</button>
+          </form>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center">Aucune demande en attente.</p>
+      <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-warning">Retourner à la page Home</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

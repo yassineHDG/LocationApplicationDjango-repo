@@ -1,0 +1,100 @@
+/* CSS pour la page de création de contrat */
+
+.contract-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #ec4899; /* Couleur rose pour les contrats */
+}
+
+.contract-container h2 {
+  color: #333333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.contract-container strong {
+  color: #be185d; /* Rose foncé pour le nom de l'objet */
+}
+
+.contract-form {
+  margin-bottom: 2rem;
+}
+
+.contract-form label {
+  font-weight: 600;
+  color: #9d174d; /* Rose plus foncé pour les labels */
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.contract-form textarea {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.75rem;
+  min-height: 200px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.contract-form button {
+  background-color: #ec4899; /* Rose pour le bouton principal */
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  border-radius: 4px;
+}
+
+.contract-form button:hover {
+  background-color: #db2777;
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.mt-3 {
+  margin-top: 1.5rem;
+}
+
+/* Styles pour les erreurs de formulaire */
+.contract-form .errorlist {
+  color: #ef4444;
+  list-style: none;
+  padding: 0;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contract-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .contract-form button,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

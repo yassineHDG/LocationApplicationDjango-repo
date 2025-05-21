@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Modifier la photo de profil{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/modifier_photo.css' %}">
+{% endblock %}
+{% block content %}
+<h2>Modifier la photo de profil</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+     <div class="photo-preview">
+
+      {% if form.instance.photo_profil %}
+        <img src="{{ form.instance.photo_profil.url }}" alt="Photo de profil actuelle" style="width: 150px; height: auto; border-radius: 8px;">
+      {% else %}
+        <div class="photo-placeholder" style="width: 150px; height: 150px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+        <span style="color: #999;">Pas de photo</span>
+        </div>
+      {% endif %}
+    </div>
+    {{ form.as_p }}
+    <button type="submit">Enregistrer</button>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+<!-- templates/login.html -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Connexion</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Se connecter</button>
+    </form>
+    <p>Pas encore de compte ? <a href="/api/Register/">Inscrivez-vous ici</a>.</p>
+</section>
+{% endblock %}

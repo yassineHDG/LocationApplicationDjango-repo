@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/creer_contrat.css' %}">
+{% endblock %}
+
+
+{% block title %}Page de Contrat{% endblock %}
+{% block content %}
+<div class="contract-container">
+  <h2>Créer un contrat pour la réservation de <strong>{{ reservation.objet.nom }}</strong></h2>
+  <form method="post" class="contract-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Envoyer le contrat</button>
+  </form>
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Retourner à la page Home</a>
+</div>
+{% endblock %}

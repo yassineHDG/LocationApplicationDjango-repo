@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reservation_form.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="reservation-container">
+  <h2>Réserver l'objet : <span class="object-name">{{ objet.nom }}</span></h2>
+
+  <p class="prix-jour"><strong>Prix/jour :</strong> <span class="prix">{{ objet.prix }} €</span></p>
+
+  <form method="post" class="reservation-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <p class="total-estime"><strong>Total estimé :</strong>
+      <span id="total">0</span> €</p>
+    
+    <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+  </form>
+</div>
+
+
+<script>
+  const dateDebutInput = document.getElementById('id_date_debut');
+  const dateFinInput = document.getElementById('id_date_fin');
+  const totalElement = document.getElementById('total');
+  const prixJour = {{ objet.prix }};
+
+  function updateTotal() {
+    const debut = new Date(dateDebutInput.value);
+    const fin = new Date(dateFinInput.value);
+    if (!isNaN(debut) && !isNaN(fin) && fin >= debut) {
+      const jours = Math.floor((fin - debut) / (1000 * 60 * 60 * 24)) + 1;
+      totalElement.textContent = jours * prixJour;
+    } else {
+      totalElement.textContent = 0;
+    }
+  }
+
+  dateDebutInput.addEventListener('change', updateTotal);
+  dateFinInput.addEventListener('change', updateTotal);
+</script>
+{% endblock %}

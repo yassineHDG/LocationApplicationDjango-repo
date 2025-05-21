@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mes Factures{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/factures_liste.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="factures-container">
+    <h2>Mes Factures</h2>
+    
+    {% if factures %}
+        <div class="factures-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>N° Facture</th>
+                        <th>Date</th>
+                        <th>Objet</th>
+                        <th>Montant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for facture in factures %}
+                        <tr>
+                            <td>#{{ facture.id }}</td>
+                            <td>{{ facture.date_emission }}</td>
+                            <td>{{ facture.paiement.reservation.objet.nom }}</td>
+                            <td>{{ facture.montant }} €</td>
+                            <td>
+                                <a href="{% url 'facture_detail' facture.paiement.id %}" class="btn-view">Voir détail</a>
+                                {% if facture.paiement.etat != 'remboursé' %}
+                                    <a href="{% url 'demander_remboursement' facture.paiement.id %}" class="btn-refund">Demander remboursement</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>Vous n'avez aucune facture pour le moment.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

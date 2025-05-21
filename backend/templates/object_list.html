@@ -1,0 +1,67 @@
+<!-- object_list.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Liste des Objets{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/object_list.css' %}">
+{% endblock %}
+
+{% block header %}
+  <h1>Liste des Objets à Louer</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2>Liste des objets à louer</h2>
+
+    {% if objets %}
+      <div class="row">
+        {% for objet in objets %}
+          <div class="col-md-4">
+            <div class="card">
+              {% if objet.image %}
+                <img src="{{ objet.image.url }}" class="card-img-top" alt="Image de l'objet" width="200">
+              {% else %}
+                <img src="{% static 'images/error.webp' %}" class="card-img-top" alt="Image par défaut" width="200">
+              {% endif %}
+
+              <div class="card-body">
+                <h5 class="card-title">{{ objet.nom }}</h5>
+                <p class="card-text">{{ objet.description }}</p>
+                <p><strong>Prix:</strong> {{ objet.prix }} €/jour</p>
+                <p><strong>Propriétaire:</strong> {{ objet.proprietaire.username }}</p>
+
+                {% if objet.prochaine_dispo %}
+                  <p><strong>Prochaine disponibilité :</strong> {{ objet.prochaine_dispo|date:"d/m/Y" }}</p>
+                {% else %}
+                  <p><strong>Disponible immédiatement.</strong></p>
+                {% endif %}
+
+                
+                {% if user != objet.proprietaire %}
+                <a href="{% url 'reservation' objet.id %}" class="btn btn-info">Réserver</a>
+                {% endif %}
+                
+                
+              
+                
+                <a href="{% url 'profile' objet.proprietaire.id %}" class="btn btn-primary">Voir Détails</a>
+
+                {% if user == objet.proprietaire %}
+                  <a href="{% url 'modify_objet' objet.id %}" class="btn btn-warning">Modifier</a>
+                  <a href="{% url 'delete_objet' objet.id %}" class="btn btn-danger">Supprimer</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Aucun objet trouvé.</p>
+    {% endif %}
+
+    <a href="/api/Add" class="btn btn-success">Ajouter un nouvel objet</a>
+  </div>
+{% endblock %}
