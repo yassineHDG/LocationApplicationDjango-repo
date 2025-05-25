@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/messaging.css' %}">
+{% endblock %}
+{% block title %}Messagerie{% endblock %}
+
+{% block content %}
+<div class="messaging-layout">
+  <!-- Sidebar des conversations -->
+  <div class="conversations-sidebar">
+    <div class="sidebar-header">
+      <h3>Conversations</h3>
+      {% if not messages %}
+        <a href="{% url 'nouveau_message' %}" class="new-message-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14m-7-7h14"/>
+          </svg>
+          Nouveau
+        </a>
+      {% endif %}
+    </div>
+    
+    <div class="conversations-list">
+      {% for conversation in conversations %}
+        <div class="conversation-card">
+          <a href="{% url 'view_conversation' conversation.interlocuteur.id %}" class="conversation-link">
+            <div class="conversation-avatar">
+              <img src="{{ conversation.interlocuteur.profile.photo_profil.url }}" alt="Photo de profil">
+            </div>
+            <div class="conversation-content">
+              <div class="conversation-header">
+                <h4 class="conversation-name">{{ conversation.interlocuteur.username }}</h4>
+                <span class="conversation-time">{{ conversation.last_message.timestamp|date:"H:i" }}</span>
+              </div>
+              <p class="conversation-preview">{{ conversation.last_message.content|truncatechars:40 }}</p>
+            </div>
+          </a>
+        </div>
+      {% empty %}
+        {% if not messages %}
+          <div class="empty-conversations">
+            <p>Aucune conversation pour le moment</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Zone des messages -->
+  <div class="messages-area">
+    {% if messages %}
+      <div class="messages-container">
+        <div class="messages-header">
+          <div class="interlocuteur-info">
+            <img src="{{ interlocuteur.profile.photo_profil.url }}" alt="Photo de profil" class="header-avatar">
+            <h4>{{ interlocuteur.username }}</h4>
+          </div>
+        </div>
+        
+        <div class="messages-thread">
+          {% for message in messages %}
+            <div class="message-wrapper {% if message.sender == user %}message-sent{% else %}message-received{% endif %}">
+              <div class="message-bubble">
+                <p class="message-text">{{ message.body }}</p>
+                <span class="message-timestamp">{{ message.timestamp|date:"H:i" }}</span>
+              </div>
+            </div>
+          {% empty %}
+            <div class="no-messages">
+              <p>Aucun message dans cette conversation</p>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="message-input-container">
+          <form method="post" class="message-form">
+            {% csrf_token %}
+            <div class="input-wrapper">
+              {{ form.body }}
+              <button type="submit" class="send-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <div class="no-conversation-selected">
+        <div class="welcome-message">
+          <h3>Bienvenue dans votre messagerie</h3>
+          <p>Sélectionnez une conversation ou créez-en une nouvelle</p>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

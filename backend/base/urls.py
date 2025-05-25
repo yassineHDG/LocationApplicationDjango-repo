@@ -8,6 +8,10 @@ from .views import PaiementView
 from .views import FactureDetailView
 from .views import ListeFacturesView
 from .views import ListeRemboursementsView
+from django.urls import path
+from . import views
+
+
 
 urlpatterns=[
     path('Home/',views.Home.as_view(),name='home'),
@@ -36,6 +40,17 @@ urlpatterns=[
     # Nouvelles routes pour les fonctionnalités demandées
     path('factures/', ListeFacturesView.as_view(), name='factures_liste'),
     path('remboursements/', ListeRemboursementsView.as_view(), name='remboursements_liste'),
+
+    
+
+    # Routes pour la messagerie
+
+    path('inbox/', views.inbox, name='inbox'),
+    path('conversation/<int:user_id>/', views.view_conversation, name='view_conversation'),
+    path('nouveau_message/', views.nouveau_message, name='nouveau_message'),
+
+
+
 
 
 

@@ -79,3 +79,18 @@ from django import forms
 
 class RemboursementForm(forms.Form):
     raison = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}), label="Raison du remboursement")
+
+from django import forms
+from .models import Messagerie
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Messagerie
+        fields = ['body']  # On n'utilise pas 'subject' ici car ce champ est optionnel dans la messagerie rapide
+        widgets = {
+            'body': forms.TextInput(attrs={
+                'placeholder': 'Écrire un message...',
+                'class': 'form-control',
+            }),
+        }
+

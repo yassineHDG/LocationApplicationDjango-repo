@@ -18,6 +18,7 @@
                 <a href="{% url 'profile' user.id %}">Profil</a> 
                 <a href="{% url 'factures_liste' %}">Mes Factures</a>
                 <a href="{% url 'remboursements_liste' %}">Mes Remboursements</a>
+                <a href="/api/inbox/">Messagerie</a>
                 <a href="/api/Logout/">Déconnexion</a>
             {% else %}
                 <a href="/api/Login/">Connexion</a>

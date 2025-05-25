@@ -13,7 +13,7 @@
     <h2>Profil de {{ user_profile.user.username }}</h2>
 
     <div class="profile-info">
-        <img src="{{ user.profile.photo_profil.url }}" alt="Photo de profil" width="150" height="150">
+        <img src="{{ user_profile.photo_profil.url }}" alt="Photo de profil" width="150" height="150">
         {% if user == user_profile.user %}
             {% if request.user == user %}
                 <a href="{% url 'modifier_photo' %}"  class="btn-modifier">Modifier la photo</a>
@@ -35,6 +35,8 @@
         <p><strong>Note moyenne :</strong> {{ note_moyenne }}/5</p>
         <p><strong>Locations effectuées :</strong> {{ user_profile.nb_locations }}</p>
         <p><strong>Fiabilité :</strong> {{ user_profile.fiabilite }}%</p>
+        <a href="{% url 'view_conversation' user.id %}">Envoyer un message</a>
+
     </div>
 
     {% if user == user_profile.user %}

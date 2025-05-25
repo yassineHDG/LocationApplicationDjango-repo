@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/messaging.css' %}">
+{% endblock %}
+{% block title %}Nouveau message{% endblock %}
+
+{% block content %}
+<div class="new-message-layout">
+  <div class="new-message-container">
+    <div class="new-message-header">
+      <h2>Nouveau message</h2>
+      <a href="{% url 'inbox' %}" class="back-button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+        Retour
+      </a>
+    </div>
+    
+    <div class="new-message-card">
+      <form method="post" class="new-message-form">
+        {% csrf_token %}
+        
+        <div class="form-field">
+          <label for="recipient" class="field-label">Destinataire</label>
+          <div class="select-wrapper">
+            <select name="recipient" id="recipient" class="recipient-select" required>
+              <option value="">Choisir un destinataire...</option>
+              {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="id_body" class="field-label">Message</label>
+          <div class="textarea-wrapper">
+            {{ form.body }}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="send-message-button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+            </svg>
+            Envoyer le message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

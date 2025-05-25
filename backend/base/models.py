@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.models import User
 
+
 def user_directory_path(instance, filename):
     # Les fichiers seront uploadés vers MEDIA_ROOT/user_<id>/<filename>
     return f'user_{instance.user.id}/{filename}'
@@ -99,6 +100,22 @@ class Remboursement(models.Model):
 
     def __str__(self):
         return f"Remboursement de {self.montant}€ pour {self.paiement.reservation.objet.nom}"
+    
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Messagerie(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"De {self.sender.username} à {self.recipient.username} : {self.subject}"
+
     
 
 

@@ -352,4 +352,83 @@ def modifier_photo(request):
 
     return render(request, 'modifier_photo.html', {'form': form})
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .models import Messagerie
+from .forms import MessageForm
+from django.db.models import Q
+from django.utils import timezone
+
+@login_required
+def inbox(request):
+    messages = Messagerie.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('-timestamp')
+    conversations = {}
+    for msg in messages:
+        interlocuteur = msg.recipient if msg.sender == request.user else msg.sender
+        if interlocuteur not in conversations:
+            conversations[interlocuteur] = msg
+
+    context = {
+        'conversations': [{'interlocuteur': u, 'last_message': m} for u, m in conversations.items()],
+    }
+    return render(request, 'inbox.html', context)
+
+
+@login_required
+def view_conversation(request, user_id):
+    interlocuteur = get_object_or_404(User, id=user_id)
+    messages = Messagerie.objects.filter(
+        Q(sender=request.user, recipient=interlocuteur) |
+        Q(sender=interlocuteur, recipient=request.user)
+    ).order_by('timestamp')
+
+    for msg in messages.filter(recipient=request.user, is_read=False):
+        msg.is_read = True
+        msg.save()
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            new_message = form.save(commit=False)
+            new_message.sender = request.user
+            new_message.recipient = interlocuteur
+            new_message.subject = f"Conversation avec {interlocuteur.username}"
+            new_message.timestamp = timezone.now()
+            new_message.save()
+            return redirect('view_conversation', user_id=interlocuteur.id)
+    else:
+        form = MessageForm()
+
+    context = {
+        'interlocuteur': interlocuteur,
+        'messages': messages,
+        'form': form,
+    }
+    return render(request, 'inbox.html', context)
+
+@login_required
+def nouveau_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        recipient_id = request.POST.get('recipient')
+        recipient = get_object_or_404(User, id=recipient_id)
+        
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.recipient = recipient
+            message.subject = f"Nouveau message à {recipient.username}"
+            message.timestamp = timezone.now()
+            message.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    
+    users = User.objects.exclude(id=request.user.id)  # Tous sauf soi-même
+    context = {
+        'form': form,
+        'users': users
+    }
+    return render(request, 'nouveau_message.html', context)
 
